@@ -17,7 +17,7 @@ Note that this code will not work on its own. Additionally, you'll need:
 
 * 3 CartoDB tables. One for storing the rider metadata, one where the data crawler can write the tracking data to, and
 one containing the checkpoints data
-* A public CartoDB visualisation that can be injected in the [Cartodbjs code](frontend/js/app.js).
+* A public CartoDB visualisation that can be injected in the [Cartodbjs code](frontend/js/app.js#L58).
 * A Redis database and Celery worker for setting up the data crawler. (See [data crawler documentation](./data_crawler)
 
 Enjoy
