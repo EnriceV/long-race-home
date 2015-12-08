@@ -95,12 +95,13 @@
                 var tableRowsOneHTML = _.reduce(tableRows, function(memo, el) {
                     return memo + el;
                 });
-                $("<div id=\"chart\"></div>").insertAfter("#map");
-                $("<table id=\"table\" class=\"table table-striped\"><thead><tr><td>Rider</td><td>Average speed (km/h)</td></tr></thead><tbody>" + tableRowsOneHTML + "</tbody></table>").insertAfter("#map");
+                $("<div id=\"chart-full\"><div class=\"container\"><div class=\"row\"><div class=\"col-md-12\"><div id=\"chart\"></div></div></div></div></div>").insertAfter("#map");
+                $("<div id=\"table-full\"><div class=\"container\"><div class=\"row\"><table id=\"table\" class=\"table table-striped\"><thead><tr><td>Rider</td><td>Average speed (km/h)</td></tr></thead><tbody>" +
+                tableRowsOneHTML + "</tbody></table></div></div></div>").insertAfter("#map");
 
                 // create chart
                 var chart = c3.generate({
-                    bindto: "#map",
+                    bindto: "#chart",
                     data : {
                         //x: "date_time",
                         xs: xs,
