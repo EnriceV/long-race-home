@@ -112,7 +112,7 @@ class TracksCrawler():
         for rider in self.riders:
             messages = self._fetch_messages_for_rider(rider)
             for message in messages:
-                if message['id'] not in existing_messages:
+                if str(message['id']) not in existing_messages:
                     message['rider_name'] = rider['full_name']
                     messages_to_write.append(message)
                     self._write_messages_to_cartodb(message)
