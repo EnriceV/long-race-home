@@ -12,7 +12,7 @@
     };
 
     var fetchRiderSpeeds = function () {
-        var sql = "SELECT * FROM (SELECT t." + nameField + ", t.date_time, (st_distance_sphere(t.the_geom,lag(t.the_geom,1) over(ORDER BY t." + nameField + ", t.date_time))/1000)/(extract(epoch FROM (t.date_time - lag(t.date_time,1) over(ORDER BY t." + nameField + ", t.date_time)))/3600) AS km_per_hour FROM " + riderTableName + " AS t) as v WHERE v.km_per_hour is not null;";
+        var sql = "SELECT * FROM (SELECT t." + nameField + ", t.date_time, (st_distance_sphere(t.the_geom,lag(t.the_geom,1) over(PARTITION BY t." + nameField + " ORDER BY t.date_time))/1000)/(extract(epoch FROM (t.date_time - lag(t.date_time,1) over(PARTITION BY t." + nameField + " ORDER BY t.date_time)))/3600) AS km_per_hour FROM " + riderTableName + " AS t) as v WHERE v.km_per_hour is not null;";
         return $.get(baseURL + "?q=" + sql)
     };
 
