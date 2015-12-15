@@ -97,8 +97,11 @@ class TracksCrawler():
         if not self.DEBUG:
             sql = """INSERT INTO tracks
                 (message_id, battery_state, date_time, latitude, longitude, rider_full_name, the_geom)
-                VALUES ({0}, '{1}', '{2}', {3}, {4}, '{5}', ST_SetSRID(ST_Point({4}, {3}),4326))""".format(
-                message['id'], message['batteryState'], message['dateTime'], message['latitude'],
+                SELECT '{0}', '{1}', '{2}', {3}, {4}, '{5}', ST_SetSRID(ST_Point({4}, {3}),4326)
+                WHERE NOT EXISTS (
+                    SELECT 1 FROM tracks WHERE message_id='{0}'
+                )""".format(
+                str(message['id']), message['batteryState'], message['dateTime'], message['latitude'],
                        message['longitude'], message['rider_name'])
             print sql
             params = {'q': sql, 'api_key':self.cartodbAPI}
