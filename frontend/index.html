@@ -1,23 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <head lang="en">
-        <meta charset="UTF-8">
-        <title>The Longest Race Home</title>
-        <meta name="author" content="Bart Aelterman and Erik Verbeke">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
-        <link rel="stylesheet" type="text/css" href="css/c3.css">
-        <link rel="stylesheet" type="text/css" href="css/main.css">
-    </head>
-    <body>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>The Longest Race Home</title>
+    <meta name="author" content="Bart Aelterman and Erik Verbeke">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">#TLRH2015</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="#tracker">Tracker</a></li>
+                <li><a href="#stats">Stats</a></li>
+                <li><a href="#social">Social</a></li>
+                <li><a href="#riders">Riders</a></li>
+                <li><a href="#wtf">WTF?!</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#about">About</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<a name="tracker"></a>
         <div id="intro">
             <div class="container">
                 <div class="page-header">
                     <h1>The Longest Race Home</h1>
                 </div>
-                <p class="lead">Ten riders are pushing the borders of their physical limits. 7 checkpoints are spread across the country. To pass all of them, the riders will have to travel almost 400km. Will they be able to reach the finish and if so, who will reach it first?</p>
-                <p>Worried mothers, wifes and daughters can follow their heros on the map below that will display live information about the riders position, travelled distance and mental state. You can already explore the checkpoints by clicking them.</p>
+                <p class="lead">9 Riders, 5 Checkpoints, 360 km minimum, 24 hours, that are the ingredients of The Long Race Home, a cycling challenge for the adventurous.</p>
+                <p>All riders carry a SPOT gen2 tracker, locations are transmitted with 10 minute intervals. The map and table refresh at 5 minute intervals, so no need to torture F5.</p>
             </div>
         </div>
 
@@ -44,6 +72,367 @@
             </div>
         </div>
 
+        <div>
+            <div class="container">
+                <h2>Statistics</h2>
+            </div>
+        </div>
+
+        <div id="table-div">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="table-area"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="container">
+                <h2>Chart</h2>
+            </div>
+        </div>
+
+        <div id="chart-div">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="chart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a name="social"></a>
+        <div id="social">
+            <div class="container">
+                <div class="row top-buffer">
+                    <div class="col-md-5">
+                        <div id="twitter-embed"><a class="twitter-timeline"  href="https://twitter.com/hashtag/tlrh2015" data-widget-id="663083497658167297">#tlrh2015 Tweets</a>
+                            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-md-offset-2">
+                        <iframe src="http://widget.websta.me/in/tag:tlrh2015/?s=200&w=2&h=4&b=0&p=0" allowtransparency="true" frameborder="0" scrolling="no" style="border:none;overflow:hidden;width:400px; height: 800px" ></iframe> <!-- websta - websta.me -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a name="riders"></a>
+        <div id="riders">
+            <div class="container">
+                <div class="row top-buffer">
+                    <div class="col-md-3 rijder small">
+                        <h2>Wim C.</h2>
+                        <img src = "http://i64.tinypic.com/33nurg6.jpg" width="200" height="200" class = "img-rounded">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalWimC">
+                            More...
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModalWimC" tabindex="-1" role="dialog" aria-labelledby="MWimC">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="MWimC">Wim C.</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <dl>
+                                            <dt>Waarom ga je niet gewoon thuis bij de kerstboom in de warmte zitten?</dt><dd> Daar is nog tijd genoeg voor. En trouwens, dat privilege moet je verdienen.</dd>
+                                            <dt>Wat is de langste afstand die je ooit op 24 uur reed?</dt><dd> 360km, offroad (TBNZ)</dd>
+                                            <dt>Wat is de langste afstand die je ooit volledig in het donker reed?</dt><dd> 160km (ook TBNZ)</dd>
+                                            <dt>Hoeveel km fiets je per jaar (all incl)</dt><dd> ongeveer 8000km, hoofdzakelijk mtb</dd>
+                                            <dt>Op welke fiets rijd je?</dt><dd>Id Worx Rock ’n Rohler 2011(met 26.000km op de teller) , Rohloff Speedhub, Vaste stalen vork</dd>
+                                            <dt>Welke aanpassingen heb je gedaan voor deze uitdaging?</dt><dd> Tractorbanden vervangen door iets beschaafder exemplaren, bagagerekje</dd>
+                                            <dt>Wat is jouw sterkste punt voor deze uitdaging?</dt><dd> Hoe slechter de omstandigheden, hoe meer ik me in m’n element voel.</dd>
+                                            <dt>Waar zie je het hardst tegenop?</dt><dd> Koude voeten.</dd>
+                                            <dt>Wat staat er in je dromen klaar aan de finish?</dt><dd> Dikke vette Duvel (of Orvalleke)</dd>
+                                            <dt>Hoelang is je geplande route?</dt><dd> Nog aan het bijschaven, maar momenteel op 378km (90% verhard)</dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-1 rijder small">
+                        <h2>Erik</h2>
+                        <img src = "http://i63.tinypic.com/vyvxw.jpg" width="200" height="200" class = "img-rounded">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalErik">
+                            More...
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModalErik" tabindex="-1" role="dialog" aria-labelledby="myModalLabelErik">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabelErik">Erik</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <dl>
+                                            <dt>Waarom ga je niet gewoon thuis bij de kerstboom in de warmte zitten?</dt><dd>We hebben er nog geen, maar ik ga op prospectie.</dd>
+                                            <dt>Wat is de langste afstand die je ooit op 24 uur reed?</dt><dd>197.7 km, als ik dat had geweten, dan was het meer geweest.</dd>
+                                            <dt>Wat is de langste afstand die je ooit volledig in het donker reed?</dt><dd>170 km - Antwerpen-Nieuwpoort</dd>
+                                            <dt>Hoeveel km fiets je per jaar (all incl)</dt><dd>rond de 10 000 km </dd>
+                                            <dt>Op welke fiets rijd je?</dt><dd>Genesis Cda 10 met een comfy brooks zadeltje</dd>
+                                            <dt>Welke aanpassingen heb je gedaan voor deze uitdaging?</dt><dd>Naafdynamo (SP SD-8) en lamp (BM Eyc) gemonteerd, ook spatbordjes en remmen vervangen door TRP hy rd's.</dd>
+                                            <dt>Wat is jouw sterkste punt voor deze uitdaging?</dt><dd>Basisconditie is ok, en dat is hopelijk wat telt op zo'n afstand.</dd>
+                                            <dt>Waar zie je het hardst tegenop?</dt><dd>Tegenwind</dd>
+                                            <dt>Wat staat er in je dromen klaar aan de finish?</dt><dd>Droge schoenen.</dd>
+                                            <dt>Hoelang is je geplande route?</dt><dd> Nog aan het bijschaven, maar momenteel op 407km</dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-1 rijder small">
+                        <h2>Wim H.</h2>
+                        <img src = "http://i65.tinypic.com/2dwat5i.jpg" width="200" height="200" class = "img-rounded">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalWimH">
+                            More...
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModalWimH" tabindex="-1" role="dialog" aria-labelledby="myModalLabelWimH">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabelWimH">Wim H.</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <dl>
+                                            <dt>Waarom ga je niet gewoon thuis bij de kerstboom in de warmte zitten?</dt><dd>k zeg niet graag neen tegen een nieuw avontuur. Ik ga over deze vraag wel niet te lang nadenk, want dan begin ik misschien te twijfelen.</dd>
+                                            <dt>Wat is de langste afstand die je ooit op 24 uur reed?</dt><dd>Cannibale 2014: 213 km, 6041 hm</dd>
+                                            <dt>Wat is de langste afstand die je ooit volledig in het donker reed?</dt><dd>Dat moeten de laatste twee trainingsritten met Erik zijn geweest (103,5 km & 131,7 km)</dd>
+                                            <dt>Hoeveel km fiets je per jaar (all incl)</dt><dd>4000 km</dd>
+                                            <dt>Op welke fiets rijd je?</dt><dd>Van Nicholas Ventus (of bij slechter weer Salsa Fargo). De Fargo is wat trager, maar veel comfortabeler en met Rofloff-naaf.</dd>
+                                            <dt>Welke aanpassingen heb je gedaan voor deze uitdaging?</dt><dd>Misschien nog een rekje plaatsen om rug goed te kunnen laten ventileren.</dd>
+                                            <dt>Wat is jouw sterkste punt voor deze uitdaging?</dt><dd>Mag ik dit punt later invullen?</dd>
+                                            <dt>Waar zie je het hardst tegenop?</dt><dd>Regen & honger</dd>
+                                            <dt>Wat staat er in je dromen klaar aan de finish?</dt><dd>Een babysit voor de kindjes en dikke erwtensoep.</dd>
+                                            <dt>Hoelang is je geplande route?</dt><dd>396 km</dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Lijn twee van rijders -->
+                <div class="row top-buffer">
+                    <div class="col-md-3 rijder small">
+                        <h2>Thomas</h2>
+                        <img src = "http://i68.tinypic.com/2aira7b.jpg" width="200" height="200" class = "img-rounded">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalThomas">
+                            More...
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModalThomas" tabindex="-1" role="dialog" aria-labelledby="myModalLabelThomas">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabelThomas">Thomas</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <dl>
+                                            <dt>Waarom ga je niet gewoon thuis bij de kerstboom in de warmte zitten?</dt><dd>Voor een goede uitdaging ben ik altijd wel te vinden.  Maar hoe dichter we TLRH2015 naderen, hoe groter het ei in mijn broek en hoe groter het verlangen naar een pintje samen met de Kerstman.</dd>
+                                            <dt>Wat is de langste afstand die je ooit op 24 uur reed?</dt><dd>Ronde van Vlaanderen 2015, 243km</dd>
+                                            <dt>Wat is de langste afstand die je ooit volledig in het donker reed?</dt><dd>Moeilijk te bepalen, want in de donker rij ik meestal niet rechtdoor.</dd>
+                                            <dt>Hoeveel km fiets je per jaar (all incl)</dt><dd>4 000 km </dd>
+                                            <dt>Op welke fiets rijd je?</dt><dd>Ridley Orion</dd>
+                                            <dt>Welke aanpassingen heb je gedaan voor deze uitdaging?</dt><dd>Geen</dd>
+                                            <dt>Wat is jouw sterkste punt voor deze uitdaging?</dt><dd>Zwakke voorbereiding, zodat er ook geen tijd is om me te bedenken.</dd>
+                                            <dt>Waar zie je het hardst tegenop?</dt><dd>24u alleen zijn en niets anders moeten doen dan:
+                                            ETEN, TRAPPEN, WEG ZOEKEN & REPEAT</dd>
+                                            <dt>Wat staat er in je dromen klaar aan de finish?</dt><dd>Ne zak vol zelfvoldoening</dd>
+                                            <dt>Hoelang is je geplande route?</dt><dd>366km maar moet nog verfijnd worden.</dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-1 rijder small">
+                        <h2>Raf</h2>
+                        <img src = "http://i67.tinypic.com/2q828h0.jpg" width="200" height="200" class = "img-rounded">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalRaf">
+                            More...
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModalRaf" tabindex="-1" role="dialog" aria-labelledby="myModalLabelRaf">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabelRaf">Raf</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <dl>
+                                            <dt>Waarom ga je niet gewoon thuis bij de kerstboom in de warmte zitten?</dt><dd>Dat is meer iets voor chiromensen ;-)</dd>
+                                            <dt>Wat is de langste afstand die je ooit op 24 uur reed?</dt><dd>Niet gemeten.</dd>
+                                            <dt>Wat is de langste afstand die je ooit volledig in het donker reed?</dt><dd>Niet gemeten.</dd>
+                                            <dt>Hoeveel km fiets je per jaar (all incl)</dt><dd>2900 km</dd>
+                                            <dt>Op welke fiets rijd je?</dt><dd>Koga Worldtraveller</dd>
+                                            <dt>Welke aanpassingen heb je gedaan voor deze uitdaging?</dt><dd>nada!</dd>
+                                            <dt>Wat is jouw sterkste punt voor deze uitdaging?</dt><dd>Geen idee, gewoon fietsen en we zien wel - navigatie zeker</dd>
+                                            <dt>Waar zie je het hardst tegenop?</dt><dd>Vermoedelijk slaaptekort en de wispelturige rechterknie maar da's oud zeer.</dd>
+                                            <dt>Wat staat er in je dromen klaar aan de finish?</dt><dd>Een bed en een warme douche</dd>
+                                            <dt>Hoelang is je geplande route?</dt><dd>Voorlopig 368 km.</dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-1 rijder small">
+                        <h2>Hannes</h2>
+                        <img src = "http://i63.tinypic.com/oktnyc.jpg" width="200" height="200" class = "img-rounded">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalHannes">
+                            More...
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModalHannes" tabindex="-1" role="dialog" aria-labelledby="myModalLabelHannes">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabelHannes">Hannes</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        empty
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Lijn drie van rijders -->
+                <div class="row top-buffer">
+                    <div class="col-md-3 rijder small">
+                        <h2>Gertjan</h2>
+                        <img src = "http://i67.tinypic.com/nmb2o8.jpg" width="200" height="200" class = "img-rounded">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalGertjan">
+                            More...
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModalGertjan" tabindex="-1" role="dialog" aria-labelledby="myModalLabelGertjan">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabelGertjan">Gertjan</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        empty
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-1 rijder small">
+                        <h2>Stijn</h2>
+                        <img src = "http://i63.tinypic.com/2coiuip.jpg" width="200" height="200" class = "img-rounded">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalStijn">
+                            More...
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModalStijn" tabindex="-1" role="dialog" aria-labelledby="myModalLabelStijn">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabelStijn">Stijn</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        empty
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-1 rijder small">
+                        <h2>Sven</h2>
+                        <img src = "http://i68.tinypic.com/2076tra.jpg" width="200" height="200" class = "img-rounded">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalSven">
+                            More...
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModalSven" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSven">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabelSven">Sven</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        empty
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <a name="wtf"></a>
+        <div id="WTF">
+            <div class="container">
+                <div class="row top-buffer">
+                    <div class="col-md-12">
+                        <h1>What?</h1>
+                        <p>The Long Race Home is a cycling challenge for amateur cyclists. Riders take on the challenge without any support and with minimal
+                            guidance: there is a start and finish point and five checkpoints. The timelimit is 24 hours, extendible with 40 minutes if a rider
+                            manages to get a picture of himself while drinking Gluhwein in Aachen.</p>
+                        <p>Unsupported means that riders are not allowed to use family or friends to gain help, nor to make arrangements in advance. Drafting is
+                            not permitted so all riders have the same chance of reaching the finish line. Checkpoint registration happens with gen2 SPOT trackers and
+                            selfregistration by camera. Riders take part on their own responsibility, the TLRH2015 only arranges transport to the start and some service at the finish. </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Why?</h1>
+                        <p>Because we can?!</p>
+                        <p>Because we don't know whether we can?</p>
+                        <p>Because we never say no to 24 hours of adventure?</p>
+                        <p>Because we like it? (or hope we do)</p>
+                        <p>Because being a dot, might be more interesting than <a href="https://burlycross.wordpress.com/2015/06/25/tcr-bluedot/">dotwatching?</a></p>
+                        <p>We do not ride for charity. However we do support Doctors without borders in Belgium and gladly ask those willing to sponsor us to make a small donation <a href="https://msf-azg.iraiser.eu/b/mijn-gift?_ga=1.204645904.1847024241.1450134330">here.</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a name="about"></a>
+        <div id="about">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>The Challenger</h1>
+                        <p>TLRH2015 isn't a race, it is a challenge and that is important: in a race there is only one winner, people race against someone. In a challenge riders fight their mind and body, finishing within the timelimit is the goal. Finding food, water and carefully planning the route are all part of the challenge and might prove vital. That being said, when the battle with your mind is over, there is always the question "how did I do?", so there is time registration. And the fastest rider will be declared "winner" of the challenge. </p>
+                        <p>TLRH2015 is a pretty straightforward copy of the worldfamous <a href="http://reportage.transcontinental.cc/">Transcontinental Race</a>. It's aim is to be more accessible, yet offer a similar level of adventure, albeit in a shorter timespan. For this first event checkpoints were chosen to allow riders to use B-roads or biketrails as the wheather might be extremly bad. This slightly reduces the available navigation options, but was a tradeoff we made to increase safety.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Datafable</h1>
+                        <p>The startup company that is the brainchild of our IT-support guy (and his partners in crime). Specialised in visualisation of geographical data we couldn't have dreamed of a better partner. Feel free to check out their other projects at <a href="http://datafable.com/">Datafable.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <footer id="footer">
             <div class="container clearfix">
                 <p class="pull-left">Created by <a href="http://datafable.com">Datafable</a></p>
@@ -53,10 +442,9 @@
 
         <!-- Scripts -->
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.10/d3.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap-min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
         <script type="text/javascript" src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
-        <script type="text/javascript" src="js/c3.min.js"></script>
         <script type="text/javascript" src="js/app.js"></script>
     </body>
 </html>

@@ -3,6 +3,7 @@ html {
     min-height: 100%;
 }
 body {
+    margin-top: 70px;
     margin-bottom: 70px; /* 50 for footer + 20 margin */
 }
 
@@ -21,7 +22,15 @@ body {
     height: 50px;
     position: absolute;
     width: 100%;
-    }
-    #footer .container {
-        padding-top: 15px;
-    }
+}
+#footer .container {
+    padding-top: 15px;
+}
+.top-buffer {
+    margin-top: 80px;
+}
+.rijder{
+    text-align: center;
+    background-color: #e3e3e3;
+    border-radius: 15px 15px 15px 15px;
+}
