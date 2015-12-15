@@ -1,5 +1,7 @@
 (function() {
-    var riders,
+    var chart,
+        chartData,
+        riders,
         selectedRider,
         vizlayers;
     var riderTableName = "tracks";
@@ -12,7 +14,7 @@
     };
 
     var fetchRiderSpeeds = function () {
-        var sql = "SELECT * FROM (SELECT t." + nameField + ", t.date_time, (st_distance_sphere(t.the_geom,lag(t.the_geom,1) over(PARTITION BY t." + nameField + " ORDER BY t.date_time))/1000)/(extract(epoch FROM (t.date_time - lag(t.date_time,1) over(PARTITION BY t." + nameField + " ORDER BY t.date_time)))/3600) AS km_per_hour FROM " + riderTableName + " AS t) as v WHERE v.km_per_hour is not null;";
+        var sql = "SELECT v." + nameField + ", v.date_time,v.distance_km,v.time_diff,v.distance_km/v.time_diff as speed,sum(v.distance_km) OVER (PARTITION BY v." + nameField + " ORDER BY v.date_time) as cum_dist FROM (SELECT t." + nameField + ", t.date_time, (st_distance_sphere(t.the_geom,lag(t.the_geom,1) over(PARTITION BY t." + nameField + " ORDER BY t.date_time) )/1000) as distance_km, (extract(epoch FROM (t.date_time - lag(t.date_time,1) over(PARTITION BY t." + nameField + " ORDER BY t.date_time)))/3600) AS time_diff FROM " + riderTableName + " as t) as v ;";
         return $.get(baseURL + "?q=" + sql)
     };
 
@@ -55,60 +57,82 @@
 
     var speedsToC3 = function(indata) {
         var x = [];
-        var y = [];
+        var speed = [];
+        var distance = [];
         indata.forEach(function(el) {
             x.push(el.date_time);
-            y.push(el.km_per_hour);
+            speed.push(el.speed);
+            distance.push(el.cum_dist);
         });
-        return {x: x, y: y};
+        return {x: x, speed: speed, distance: distance};
+    };
+
+    var setSpeedDataChart = function() {
+        chart.data(chartData.speed);
     };
 
     var insertSpeedTableAndChart = function() {
         fetchRiderSpeeds()
             .done(function (data) {
-                var speeds_per_rider = _.groupBy(data.rows, function(x) {return x[nameField]});
-                var avg_speed_per_rider = _.mapObject(speeds_per_rider, function(val, key) {
+                console.log(data);
+                var data_per_rider = _.groupBy(data.rows, function(x) {return x[nameField]});
+                var aggregatedPerRider = _.mapObject(data_per_rider, function(val, key) {
                     var total = 0;
                     for (var i= 0;i<val.length;i++) {
-                        total = total+val[i].km_per_hour;
+                        total = total+val[i].speed;
                     }
-                    return total/val.length;
+                    return {
+                        avg_speed: total/val.length,
+                        total_distance: val[val.length-1].cum_dist
+                    };
                 });
-                var avg_speed_records = _.mapObject(speeds_per_rider, function(records, rider) {
+                var c3RecordsPerRider = _.mapObject(data_per_rider, function(records, rider) {
                     return speedsToC3(records);
                 });
-                var all_records = [];
+                var all_speed_records = [];
+                var all_distance_records = [];
                 var xs = [];
-                var c3Data = _.each(avg_speed_records, function(val, key, list) {
+                var c3Data = _.each(c3RecordsPerRider, function(val, key, list) {
                     val.x.unshift('x' + key);
                     xs[key] = 'x' + key;
-                    val.y.unshift(key);
-                    all_records.push(val.x);
-                    all_records.push(val.y);
+                    val.speed.unshift(key);
+                    val.distance.unshift(key);
+                    all_speed_records.push(val.x);
+                    all_speed_records.push(val.speed);
+                    all_distance_records.push(val.x);
+                    all_distance_records.push(val.distance);
                 });
-                console.log(all_records);
+                console.log(all_speed_records);
+                console.log(all_distance_records);
 
                 // insert html table with average speeds
-                var tableRows = _.mapObject(avg_speed_per_rider, function(speed, rider) {
-                    return "<tr><td>" + rider + "</td><td>" + speed + "</td></tr>"
+                var tableRows = _.mapObject(aggregatedPerRider, function(aggValues, rider) {
+                    return "<tr><td>" + rider + "</td><td>" + aggValues.avg_speed + "</td><td>" + aggValues.total_distance + "</td></tr>"
                 });
                 var tableRowsOneHTML = _.reduce(tableRows, function(memo, el) {
                     return memo + el;
                 });
-                $("<div id=\"chart-full\"><div class=\"container\"><div class=\"row\"><div class=\"col-md-12\"><div id=\"chart\"></div></div></div></div></div>").insertAfter("#map");
-                $("<div id=\"table-full\"><div class=\"container\"><div class=\"row\"><table id=\"table\" class=\"table table-striped\"><thead><tr><td>Rider</td><td>Average speed (km/h)</td></tr></thead><tbody>" +
-                tableRowsOneHTML + "</tbody></table></div></div></div>").insertAfter("#map");
+                $("<table id=\"table\" class=\"table table-striped\"><thead><tr><td>Rider</td><td>Average speed (km/h)</td><td>Total distance travelled</td></tr></thead><tbody>" +
+                tableRowsOneHTML + "</tbody></table>").insertAfter("#table-area");
 
-                // create chart
-                var chart = c3.generate({
-                    bindto: "#chart",
-                    data : {
-                        //x: "date_time",
+                // set chart data
+                chartData = {
+                    speed: {
                         xs: xs,
                         xFormat: '%Y-%m-%dT%H:%M:%SZ',
-                        columns: all_records,
-
+                        columns: all_speed_records
                     },
+                    distance: {
+                        xs: xs,
+                        xFormat: '%Y-%m-%dT%H:%M:%SZ',
+                        columns: all_distance_records
+                    }
+                };
+
+                // create chart
+                chart = c3.generate({
+                    bindto: "#chart",
+                    data: {columns: []},
                     axis: {
                         x: {
                             type: "timeseries",
@@ -118,6 +142,7 @@
                         }
                     }
                 });
+                setSpeedDataChart();
             });
     };
 
