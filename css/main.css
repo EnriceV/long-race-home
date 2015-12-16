@@ -21,6 +21,9 @@ body {
     height: 450px;
     margin-bottom: 20px;
 }
+#chart-controls {
+    margin-bottom: 20px;
+}
 #cyclists a.thumbnail,
 #cyclists a.thumbnail:hover {
     color: inherit;

@@ -1,4 +1,4 @@
-(function() {
+var app = (function() {
     var chart,
         chartData,
         riders,
@@ -60,7 +60,7 @@
         var speed = [];
         var distance = [];
         indata.forEach(function(el) {
-            x.push(el.date_time);
+            x.push(new Date(el.date_time));
             speed.push(el.speed);
             distance.push(el.cum_dist);
         });
@@ -68,7 +68,19 @@
     };
 
     var setSpeedDataChart = function() {
-        chart.data(chartData.speed);
+        chart.axis.labels({
+            x: "time",
+            y: "speed (km/h)"
+        });
+        chart.load(chartData.speed);
+    };
+
+    var setDistanceDataChart = function() {
+        chart.axis.labels({
+            x: "time",
+            y: "distance (km)"
+        });
+        chart.load(chartData.distance);
     };
 
     var insertSpeedTableAndChart = function() {
@@ -93,6 +105,7 @@
                 var all_distance_records = [];
                 var xs = [];
                 var c3Data = _.each(c3RecordsPerRider, function(val, key, list) {
+                    var times = _.map(val.x, function(time) {return new Date(time)});
                     val.x.unshift('x' + key);
                     xs[key] = 'x' + key;
                     val.speed.unshift(key);
@@ -102,8 +115,6 @@
                     all_distance_records.push(val.x);
                     all_distance_records.push(val.distance);
                 });
-                console.log(all_speed_records);
-                console.log(all_distance_records);
 
                 // insert html table with average speeds
                 var tableRows = _.mapObject(aggregatedPerRider, function(aggValues, rider) {
@@ -133,20 +144,29 @@
 
                 // create chart
                 chart = c3.generate({
-                    bindto: "#speed-chart",
-                    data: {xs: xs,
-                    xFormat: '%Y-%m-%dT%H:%M:%SZ',
-                    columns: all_speed_records},
+                    bindto: "#chart",
+                    data: {
+                        xs: xs,
+                        xFormat: '%Y-%m-%dT%H:%M:%SZ',
+                        columns: all_speed_records
+                    },
                     axis: {
                         x: {
+                            label: "time",
                             type: "timeseries",
                             tick: {
                                 format: "%Y-%m-%d %H:%M"
                             }
+                        },
+                        y: {
+                            label: "speed (km/h)",
+                            min: 0,
+                            tick: {
+                                format: function (x) {return Math.round(x*100)/100.0}
+                            }
                         }
                     }
                 });
-                //setSpeedDataChart();
             });
     };
 
@@ -167,8 +187,30 @@
         insertSpeedTableAndChart();
     };
 
-    // Closes the responsive menu on menu item click
-    $(".navbar-collapse ul li a").click(function() {
-        $(".navbar-toggle:visible").click();
-    });
+    var a = {
+        setDistanceDataChart: setDistanceDataChart,
+        setSpeedDataChart: setSpeedDataChart
+    };
+
+    return a;
 })();
+
+$("#speed").on("click", function() {
+    var selectedButton = $(this),
+        sibling = selectedButton.siblings();
+    sibling.removeClass("active");
+    selectedButton.addClass("active");
+    app.setSpeedDataChart();
+});
+$("#distance").on("click", function () {
+    var selectedButton = $(this),
+        sibling = selectedButton.siblings();
+    sibling.removeClass("active");
+    selectedButton.addClass("active");
+    app.setDistanceDataChart();
+});
+
+// Closes the responsive menu on menu item click
+$(".navbar-collapse ul li a").click(function() {
+    $(".navbar-toggle:visible").click();
+});
