@@ -1,14 +1,12 @@
-# Long race home
+# The long race home
 
-Website accompanying the **Long Race home**.
-
-More info about the project: well, [view the website](http://bartaelterman.github.io/long-race-home/frontend/)
+Website for *The long race home*: <http://datafable.com/tlrh>
 
 ## Nerdy part
 
 We'll be tracking 10 riders during a race across Belgium. The trackers are SPOT Trackers. The data sent by these
-trackers will be displayed live on the [longest race home
-website](http://bartaelterman.github.io/long-race-home/frontend/). This repository contains the following code:
+trackers will be displayed live on the [long race home
+website](http://datafable.com/tlrh). This repository contains the following code:
 
 * [Data crawler](./data_crawler): Python code to fetch the tracking data from the SPOT API.
 * [Website](./frontend): HTML, CSS en JavaScript code to display the website and the CartoDB visualisation.
