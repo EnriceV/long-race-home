@@ -150,7 +150,6 @@
             });
     };
 
-
     window.onload = function() {
         fetchRider()
             .done(function (data) {
@@ -167,4 +166,9 @@
             });
         insertSpeedTableAndChart();
     };
+
+    // Closes the responsive menu on menu item click
+    $(".navbar-collapse ul li a").click(function() {
+        $(".navbar-toggle:visible").click();
+    });
 })();
