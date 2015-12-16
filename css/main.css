@@ -6,6 +6,9 @@ body {
     margin-top: 70px;
     margin-bottom: 70px; /* 50 for footer + 20 margin */
 }
+.row {
+    margin-bottom: 20px;
+}
 
 #map-controls {
     margin-bottom: 20px;
