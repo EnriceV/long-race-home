@@ -18,6 +18,12 @@ body {
     height: 450px;
     margin-bottom: 20px;
 }
+#cyclists a.thumbnail,
+#cyclists a.thumbnail:hover {
+    color: inherit;
+    text-align: center;
+    text-decoration: none;
+}
 
 #footer {
     background-color: #f8f8f8;
@@ -29,10 +35,4 @@ body {
 }
 #footer .container {
     padding-top: 15px;
-}
-
-.rijder{
-    text-align: center;
-    background-color: #e3e3e3;
-    border-radius: 15px 15px 15px 15px;
 }
