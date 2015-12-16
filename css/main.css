@@ -13,6 +13,7 @@ body {
 #map-canvas {
     background-color: #dddddd;
     height: 450px;
+    margin-bottom: 20px;
 }
 
 #footer {
@@ -26,9 +27,7 @@ body {
 #footer .container {
     padding-top: 15px;
 }
-.top-buffer {
-    margin-top: 80px;
-}
+
 .rijder{
     text-align: center;
     background-color: #e3e3e3;
