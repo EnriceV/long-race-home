@@ -7,7 +7,7 @@ body {
     margin-bottom: 70px; /* 50 for footer + 20 margin */
 }
 
-#controls {
+#map-controls {
     margin-bottom: 20px;
 }
 #map-canvas {

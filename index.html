@@ -45,21 +45,15 @@
             </div>
         </div>
 
-        <nav id="controls">
-            <div class="container">
-                <form class="form-inline" role="form">
-                    <div class="form-group">
-                        <div>
-                            <label for="select-rider" class="control-label">Select a rider</label>
-                            <select id="select-rider" class="form-control"></select>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </nav>
-
         <div id="map">
             <div class="container">
+                <form class="form-inline" id="map-controls">
+                    <div class="form-group">
+                        <label for="select-rider" class="control-label">Select a rider</label>
+                        <select id="select-rider" class="form-control"></select>
+                    </div>
+                </form>
+
                 <div class="row">
                     <div class="col-md-12">
                         <div id="map-canvas"></div>
@@ -427,7 +421,7 @@
                 </div>
             </div>
         </div>
-        
+
         <a name="about"></a>
         <div id="about">
             <div class="container">
