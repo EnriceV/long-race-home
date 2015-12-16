@@ -12,7 +12,10 @@ body {
 
 #map-controls {
     margin-bottom: 20px;
-}
+    }
+    #map-controls label {
+        padding-right: 20px;
+    }
 #map-canvas {
     background-color: #dddddd;
     height: 450px;
@@ -24,7 +27,6 @@ body {
     text-align: center;
     text-decoration: none;
 }
-
 #footer {
     background-color: #f8f8f8;
     border-top: 1px solid #e7e7e7;
