@@ -132,7 +132,9 @@
                 // create chart
                 chart = c3.generate({
                     bindto: "#chart",
-                    data: {columns: []},
+                    data: {xs: xs,
+                    xFormat: '%Y-%m-%dT%H:%M:%SZ',
+                    columns: all_speed_records},
                     axis: {
                         x: {
                             type: "timeseries",
@@ -142,7 +144,7 @@
                         }
                     }
                 });
-                setSpeedDataChart();
+                //setSpeedDataChart();
             });
     };
 
