@@ -15,7 +15,7 @@ var app = (function() {
 
     var fetchRiderSpeeds = function () {
         var sql = "SELECT v." + nameField + ", v.date_time,v.distance_km,v.time_diff,v.distance_km/v.time_diff as speed,sum(v.distance_km) OVER (PARTITION BY v." + nameField + " ORDER BY v.date_time) as cum_dist FROM (SELECT t." + nameField + ", t.date_time, (st_distance_sphere(t.the_geom,lag(t.the_geom,1) over(PARTITION BY t." + nameField + " ORDER BY t.date_time) )/1000) as distance_km, (extract(epoch FROM (t.date_time - lag(t.date_time,1) over(PARTITION BY t." + nameField + " ORDER BY t.date_time)))/3600) AS time_diff FROM " + riderTableName + " as t) as v ;";
-        return $.get(baseURL + "?q=" + sql)
+        return $.get(baseURL + "?q=" + sql);
     };
 
     var createRiderSelection = function () {
@@ -123,8 +123,10 @@ var app = (function() {
                 var tableRowsOneHTML = _.reduce(tableRows, function(memo, el) {
                     return memo + el;
                 });
-                $("<table id=\"table\" class=\"table table-striped\"><thead><tr><td>Rider</td><td>Average speed (km/h)</td><td>Total distance travelled</td></tr></thead><tbody>" +
-                tableRowsOneHTML + "</tbody></table>").insertAfter("#table-area");
+                $("#table-container").append(
+                    "<table id=\"stats-table\" class=\"table table-striped\">" + 
+                    "<thead><tr><th>Cyclist</th><th>Average speed (km/h)</th><th>Total distance travelled</th></tr></thead>" + 
+                    "<tbody>" + tableRowsOneHTML + "</tbody></table>");
 
                 // set chart data
                 chartData = {
@@ -168,7 +170,6 @@ var app = (function() {
             });
     };
 
-
     window.onload = function() {
         fetchRider()
             .done(function (data) {
@@ -207,4 +208,9 @@ $("#distance").on("click", function () {
     sibling.removeClass("active");
     selectedButton.addClass("active");
     app.setDistanceDataChart();
+});
+
+// Closes the responsive menu on menu item click
+$(".navbar-collapse ul li a").click(function() {
+    $(".navbar-toggle:visible").click();
 });
