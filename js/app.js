@@ -14,7 +14,7 @@ var app = (function() {
     };
 
     var fetchRiderSpeeds = function () {
-        var sql = "SELECT v." + nameField + ", v.date_time,v.distance_km,v.time_diff,v.distance_km/v.time_diff as speed,sum(v.distance_km) OVER (PARTITION BY v." + nameField + " ORDER BY v.date_time) as cum_dist FROM (SELECT t." + nameField + ", t.date_time, (st_distance_sphere(t.the_geom,lag(t.the_geom,1) over(PARTITION BY t." + nameField + " ORDER BY t.date_time) )/1000) as distance_km, (extract(epoch FROM (t.date_time - lag(t.date_time,1) over(PARTITION BY t." + nameField + " ORDER BY t.date_time)))/3600) AS time_diff FROM " + riderTableName + " as t) as v ;";
+        var sql = "SELECT v." + nameField + ", v.date_time,v.distance_km,v.time_diff,v.distance_km/v.time_diff as speed,sum(v.distance_km) OVER (PARTITION BY v." + nameField + " ORDER BY v.date_time) as cum_dist FROM (SELECT t." + nameField + ", t.date_time, (st_distance_sphere(t.the_geom,lag(t.the_geom,1) over(PARTITION BY t." + nameField + " ORDER BY t.date_time) )/1000) as distance_km, (extract(epoch FROM (t.date_time - lag(t.date_time,1) over(PARTITION BY t." + nameField + " ORDER BY t.date_time)))/3600) AS time_diff FROM " + riderTableName + " as t WHERE t.date_time > '2015-12-18T19:00:00Z') as v ;";
         return $.get(baseURL + "?q=" + sql);
     };
 
