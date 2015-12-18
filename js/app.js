@@ -5,6 +5,7 @@ var app = (function() {
         selectedRider,
         vizlayers;
     var riderTableName = "tracks";
+    var raceStart = "2015-12-18T20:00:00Z";
     var nameField = "rider_full_name";
     var baseURL = "https://bartaelterman.cartodb.com/api/v2/sql";
 
@@ -14,7 +15,8 @@ var app = (function() {
     };
 
     var fetchRiderSpeeds = function () {
-        var sql = "SELECT v." + nameField + ", v.date_time,v.distance_km,v.time_diff,v.distance_km/v.time_diff as speed,sum(v.distance_km) OVER (PARTITION BY v." + nameField + " ORDER BY v.date_time) as cum_dist FROM (SELECT t." + nameField + ", t.date_time, (st_distance_sphere(t.the_geom,lag(t.the_geom,1) over(PARTITION BY t." + nameField + " ORDER BY t.date_time) )/1000) as distance_km, (extract(epoch FROM (t.date_time - lag(t.date_time,1) over(PARTITION BY t." + nameField + " ORDER BY t.date_time)))/3600) AS time_diff FROM " + riderTableName + " as t WHERE t.date_time > '2015-12-18T19:00:00Z') as v ;";
+        var sql = "SELECT v." + nameField + ", v.date_time,v.distance_km,v.time_diff,round(cast(v.distance_km/v.time_diff as numeric), 2) as speed,round(cast(sum(v.distance_km) OVER (PARTITION BY v." + nameField + " ORDER BY v.date_time) as numeric), 2) as cum_dist FROM (SELECT t." + nameField + ", t.date_time, (st_distance_sphere(t.the_geom,lag(t.the_geom,1) over(PARTITION BY t." + nameField + " ORDER BY t.date_time) )/1000) as distance_km, (extract(epoch FROM (t.date_time - lag(t.date_time,1) over(PARTITION BY t." + nameField + " ORDER BY t.date_time)))/3600) AS time_diff FROM " + riderTableName + " as t WHERE t.date_time > '" + raceStart + "') as v ;";
+        console.log(sql);
         return $.get(baseURL + "?q=" + sql);
     };
 
@@ -43,7 +45,7 @@ var app = (function() {
         vizlayers[1].getSubLayer(0).set({"sql": "SELECT * FROM " + riderTableName});
         vizlayers[1].getSubLayer(1).set(
             {
-                "sql": "SELECT ST_MakeLine (the_geom_webmercator ORDER BY date_time ASC) AS the_geom_webmercator, " + nameField + " FROM " + riderTableName + " GROUP BY " + nameField
+                "sql": "SELECT ST_MakeLine (the_geom_webmercator ORDER BY date_time ASC) AS the_geom_webmercator, " + nameField + " FROM " + riderTableName + " WHERE date_time>'" + raceStart + "' GROUP BY " + nameField
             });
     };
 
@@ -51,7 +53,7 @@ var app = (function() {
         vizlayers[1].getSubLayer(0).set({"sql": "SELECT * FROM " + riderTableName + " WHERE " + nameField + "='" + selectedRider[nameField] + "'"});
         vizlayers[1].getSubLayer(1).set(
             {"sql": "SELECT ST_MakeLine (the_geom_webmercator ORDER BY date_time ASC) AS the_geom_webmercator, " + nameField + " FROM " +
-        riderTableName + " WHERE " + nameField + "='" + selectedRider[nameField] + "' GROUP BY " + nameField
+        riderTableName + " WHERE " + nameField + "='" + selectedRider[nameField] + "' AND date_time>'" + raceStart + "' GROUP BY " + nameField
         });
     };
 
