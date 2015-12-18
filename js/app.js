@@ -41,19 +41,18 @@ var app = (function() {
     };
 
     var clearSelection = function() {
-        vizlayers[1].getSubLayer(0).set({"sql": "SELECT * FROM " + riderTableName});
-        vizlayers[1].getSubLayer(1).set(
-            {
-                "sql": "SELECT ST_MakeLine (the_geom_webmercator ORDER BY date_time ASC) AS the_geom_webmercator, " + nameField + " FROM " + riderTableName + " WHERE date_time>'" + raceStart + "' GROUP BY " + nameField
-            });
+        var query1 = "SELECT message_id, to_char(date_time at time zone 'cet', 'DD-MM HH24:MI:SS') as date_time_str, " + nameField + ", the_geom, the_geom_webmercator FROM " + riderTableName + " WHERE date_time>'2015-12-18T19:00:00Z'";
+        var query2 = "SELECT ST_MakeLine (the_geom_webmercator ORDER BY date_time ASC) AS the_geom_webmercator, rider_full_name, 'test' as test FROM tracks WHERE date_time>'2015-12-18T19:00:00Z' GROUP BY rider_full_name";
+        vizlayers[1].getSubLayer(0).set({"sql": query1});
+        vizlayers[1].getSubLayer(1).set({"sql": query2});
     };
 
     var loadRider = function() {
-        vizlayers[1].getSubLayer(0).set({"sql": "SELECT * FROM " + riderTableName + " WHERE " + nameField + "='" + selectedRider[nameField] + "'"});
-        vizlayers[1].getSubLayer(1).set(
-            {"sql": "SELECT ST_MakeLine (the_geom_webmercator ORDER BY date_time ASC) AS the_geom_webmercator, " + nameField + " FROM " +
-        riderTableName + " WHERE " + nameField + "='" + selectedRider[nameField] + "' AND date_time>'" + raceStart + "' GROUP BY " + nameField
-        });
+        var query1 = "SELECT message_id, to_char(date_time at time zone 'cet', 'DD-MM HH24:MI:SS') as date_time_str, " + nameField + ", the_geom, the_geom_webmercator FROM " + riderTableName + " WHERE date_time>'2015-12-18T19:00:00Z' AND " + nameField + "='" + selectedRider[nameField] + "'";
+        var query2 = "SELECT ST_MakeLine (the_geom_webmercator ORDER BY date_time ASC) AS the_geom_webmercator, rider_full_name, 'test' as test FROM tracks WHERE date_time>'2015-12-18T19:00:00Z' AND " + nameField + "='" + selectedRider[nameField] + "' GROUP BY rider_full_name";
+        console.log(query1);
+        vizlayers[1].getSubLayer(0).set({"sql": query1});
+        vizlayers[1].getSubLayer(1).set({"sql": query2});
     };
 
     var speedsToC3 = function(indata) {
@@ -94,7 +93,7 @@ var app = (function() {
                         total = total+val[i].speed;
                     }
                     return {
-                        avg_speed: total/val.length,
+                        avg_speed: Math.round(total*100/val.length)/100,
                         total_distance: val[val.length-1].cum_dist
                     };
                 });
@@ -124,7 +123,7 @@ var app = (function() {
                     return memo + el;
                 });
                 $("#table-container").append(
-                    "<table id=\"stats-table\" class=\"table table-striped\">" + 
+                    "<table id=\"stats-table\" class=\"table table-striped\">" +
                     "<thead><tr><th>Cyclist</th><th>Average speed (km/h)</th><th>Total distance travelled</th></tr></thead>" + 
                     "<tbody>" + tableRowsOneHTML + "</tbody></table>");
 
