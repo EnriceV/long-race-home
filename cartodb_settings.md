@@ -89,40 +89,40 @@ None
 ### Cartocss
 
 ```
-    /* category visualization */
+/** category visualization */
 
-    #tracks {
-       line-width: 2;
-       line-opacity: 0.7;
-    }
+#tracks {
+   line-width: 2;
+   line-opacity: 0.7;
+}
 
-    #tracks[rider_full_name="Erik Verbeke"] {
-       line-color: #A6CEE3;
-    }
-    #tracks[rider_full_name="Gertjan Winten"] {
-       line-color: #1F78B4;
-    }
-    #tracks[rider_full_name="Hannes Sels"] {
-       line-color: #B2DF8A;
-    }
-    #tracks[rider_full_name="Raf Van Zele"] {
-       line-color: #33A02C;
-    }
-    #tracks[rider_full_name="Stijn Van Hofstraeten"] {
-       line-color: #FB9A99;
-    }
-    #tracks[rider_full_name="Sven Van Looveren"] {
-       line-color: #E31A1C;
-    }
-    #tracks[rider_full_name="Thomas Van Leemputten"] {
-       line-color: #FDBF6F;
-    }
-    #tracks[rider_full_name="Wim Cheroutre"] {
-       line-color: #FF7F00;
-    }
-    #tracks[rider_full_name="Wim Hendrickx"] {
-       line-color: #CAB2D6;
-    }
+#tracks[rider_full_name="Erik Verbeke"] {
+   line-color: #A6CEE3;
+}
+#tracks[rider_full_name="Gertjan Winten"] {
+   line-color: #1F78B4;
+}
+#tracks[rider_full_name="Hannes Sels"] {
+   line-color: #1F78B4;
+}
+#tracks[rider_full_name="Raf Van Zele"] {
+   line-color: #B2DF8A;
+}
+#tracks[rider_full_name="Stijn Van Hofstraeten"] {
+   line-color: #33A02C;
+}
+#tracks[rider_full_name="Sven Van Looveren"] {
+   line-color: #FB9A99;
+}
+#tracks[rider_full_name="Thomas Van Leemputten"] {
+   line-color: #E31A1C;
+}
+#tracks[rider_full_name="Wim Cheroutre"] {
+   line-color: #FDBF6F;
+}
+#tracks[rider_full_name="Wim Hendrickx"] {
+   line-color: #FF7F00;
+}
 ```
 
 ### Legend
