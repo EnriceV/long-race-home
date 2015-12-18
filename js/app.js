@@ -154,6 +154,7 @@ var app = (function() {
                             label: "time",
                             type: "timeseries",
                             tick: {
+                                count: 10,
                                 format: "%Y-%m-%d %H:%M"
                             }
                         },
