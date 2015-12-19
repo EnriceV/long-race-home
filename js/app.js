@@ -20,7 +20,7 @@ var app = (function() {
     };
 
     var createRiderSelection = function () {
-        $("#select-rider").append('<option value="0">All riders</option>');
+        $("#select-rider").append('<option value="0">All cyclists</option>');
         $("#select-rider").append('<option disabled>──────────</option>');
         for (var i=0; i<riders.length; i++) {
             var ridername = riders[i][nameField];
@@ -147,7 +147,18 @@ var app = (function() {
                     data: {
                         xs: xs,
                         xFormat: '%Y-%m-%dT%H:%M:%SZ',
-                        columns: all_speed_records
+                        columns: all_speed_records,
+                        colors: {
+                            "Erik Verbeke": "#A6CEE3",
+                            "Gertjan Winten": "#1F78B4",
+                            "Hannes Sels": "#1F78B4",
+                            "Raf Van Zele": "#B2DF8A",
+                            "Stijn Van Hofstraeten": "#33A02C",
+                            "Sven Van Looveren": "#FB9A99",
+                            "Thomas Van Leemputten": "#E31A1C",
+                            "Wim Cheroutre": "#FDBF6F",
+                            "Wim Hendrickx": "#FF7F00"
+                        }
                     },
                     axis: {
                         x: {
